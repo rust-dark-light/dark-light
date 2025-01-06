@@ -9,14 +9,6 @@ description = "Detect if dark mode or light mode is enabled"
 readme = "README.md"
 build = "build.rs"
 
-[[example]]
-name = "sync"
-path = "examples/sync.rs"
-required-features = ["sync"]
-
-[features]
-sync = []
-
 [dependencies]
 futures-lite = "2.3.0"
 log = "0.4.22"

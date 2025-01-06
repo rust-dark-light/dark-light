@@ -43,15 +43,6 @@ async fn main() {
 }
 ```
 
-This crate is asynchronous by default, but can be used in a synchronous manner by enabling the `sync` feature and prefixing the methods with `sync::`. 
-
- ```rust
-let mode = dark_light::sync::detect();
-let rx = dark_light::sync::subscribe();
-```
-
-> If you are upgrading this crate, you may update your code to use the async API or alternatively, you can use the `sync` feature to use the synchronous version of the methods.
-
 ## Example
 
 Async:
@@ -78,5 +69,3 @@ Licensed under either of
  * MIT license ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
 at your option.
-
-

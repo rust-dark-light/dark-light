@@ -3,8 +3,6 @@
 //! It supports macOS, Windows, Linux, BSDs, and WASM.
 //!
 //! On Linux the [XDG Desktop Portal](https://flatpak.github.io/xdg-desktop-portal/) D-Bus API is checked for the `color-scheme` preference, which works in Flatpak sandboxes without needing filesystem access.
-//! Features:
-//! - [`sync`] - Enables the synchronous API.
 mod mode;
 mod platforms;
 
@@ -17,15 +15,12 @@ pub use mode::Mode;
 /// ``` no_run
 /// use dark_light::Mode;
 ///
-/// #[tokio::main]
-/// async fn main() {
-///     let mode = dark_light::detect().await;
+/// let mode = dark_light::detect();
 ///
-///     match mode {
-///         Mode::Dark => {},
-///         Mode::Light => {},
-///         Mode::Default => {},
-///     }
+/// match mode {
+///     Mode::Dark => {},
+///     Mode::Light => {},
+///     Mode::Default => {},
 /// }
 /// ```
 pub use platforms::platform::detect::detect;
@@ -54,26 +49,3 @@ pub use platforms::platform::detect::detect;
 /// }
 /// ```
 pub use platforms::platform::subscribe::subscribe;
-
-#[cfg(any(feature = "sync", doc))]
-/// The synchronous API of this crate.
-///
-/// If you are upgrading this crate, you may update your code to use the async API or alternatively, you can enable the `sync` feature to use this module.
-pub mod sync {
-    /// Detects the system theme mode. If the mode can’t be detected, it fallbacks to [`Mode::Default`](crate::Mode::Default).
-    ///
-    /// # Example
-    ///
-    /// ``` no_run
-    /// use dark_light::Mode;
-    ///
-    /// let mode = dark_light::sync::detect();
-    ///
-    /// match mode {
-    ///     Mode::Dark => {},
-    ///     Mode::Light => {},
-    ///     Mode::Default => {},
-    /// }
-    /// ```
-    pub use super::platforms::platform::detect::sync::detect;
-}

@@ -5,6 +5,9 @@ use crate::Mode;
 
 use ashpd::desktop::settings::ColorScheme as PortalColorScheme;
 use ashpd::desktop::settings::Settings as XdgPortalSettings;
+use ashpd::desktop::settings::Settings;
+use futures_lite::{Stream, StreamExt};
+use std::error::Error;
 
 impl From<PortalColorScheme> for Mode {
     fn from(value: PortalColorScheme) -> Self {
@@ -28,4 +31,13 @@ pub(crate) async fn get_color_scheme() -> Mode {
     };
 
     color_scheme.into()
+}
+
+pub async fn color_scheme_stream() -> Result<impl Stream<Item = Mode> + Send, Box<dyn Error>> {
+    let color_scheme_stream = Settings::new()
+        .await?
+        .receive_color_scheme_changed()
+        .await?
+        .map(Mode::from);
+    Ok(Box::pin(color_scheme_stream))
 }
