@@ -25,7 +25,7 @@ log = "0.4.22"
 tokio = { version = "1.23.0", features = ["full"] }
 
 [target.'cfg(any(target_os = "linux", target_os = "freebsd", target_os = "dragonfly", target_os = "netbsd", target_os = "openbsd"))'.dependencies]
-ashpd = "0.10.0"
+ashpd = { version = "0.10.0", default-features = false, features = ["async-std"] }
 
 [target.'cfg(windows)'.dependencies]
 winreg = "0.52.0"
