@@ -4,10 +4,10 @@
 #[cfg(any(feature = "sync", doc))]
 pub mod sync {
     pub fn detect() -> crate::Mode {
-        crate::Mode::from_bool(super::super::is_dark_mode())
+        super::super::is_dark_mode().into()
     }
 }
 
 pub async fn detect() -> crate::Mode {
-    crate::Mode::from_bool(super::is_dark_mode())
+    super::is_dark_mode().into()
 }

@@ -11,10 +11,9 @@ pub enum Mode {
     Default,
 }
 
-impl Mode {
-    #[allow(dead_code)]
-    /// Creates a `Mode` value from a boolean value.
-    pub fn from_bool(b: bool) -> Self {
+/// Creates a `Mode` value from a boolean value.
+impl From<bool> for Mode {
+    fn from(b: bool) -> Self {
         if b {
             Mode::Dark
         } else {
