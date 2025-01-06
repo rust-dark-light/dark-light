@@ -76,24 +76,4 @@ pub mod sync {
     /// }
     /// ```
     pub use super::platforms::platform::detect::sync::detect;
-
-    /// Notifies the user if the system theme has been changed.
-    ///
-    /// This function returns a stream of `Mode` values. The stream will emit a new value whenever the system theme changes.
-    ///
-    /// # Example
-    ///
-    /// ``` no_run
-    /// use dark_light::Mode;
-    ///
-    /// let stream = dark_light::sync::subscribe();
-    /// while let Ok(mode) = stream.recv() {
-    ///     match mode {
-    ///         Mode::Dark => {},
-    ///         Mode::Light => {},
-    ///         Mode::Default => {},
-    ///     }
-    /// }
-    /// ```
-    pub use super::platforms::platform::subscribe::sync::subscribe;
 }
