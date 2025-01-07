@@ -12,10 +12,6 @@ pub use mode::Mode;
 
 /// Detects the system theme mode.
 ///
-/// # Errors
-/// - If the system theme mode could not be detected, returns [`Error::DetectionFailed`].
-/// - If the XDG Desktop Portal could not be communicated with in Linux, returns [`Error::XdgDesktopPortal`].
-///
 /// # Example
 ///
 /// ``` no_run
@@ -37,10 +33,6 @@ pub use platforms::platform::detect::detect;
 /// Notifies the user if the system theme has been changed.
 ///
 /// This function returns a stream of `Mode` values. The stream will emit a new value whenever the system theme changes.
-///
-/// # Errors
-/// - If the system theme mode could not be detected, returns [`Error::DetectionFailed`].
-/// - If the XDG Desktop Portal could not be communicated with in Linux, returns [`Error::XdgDesktopPortal`].
 ///
 /// # Example
 ///

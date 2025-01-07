@@ -1,9 +1,8 @@
 pub async fn detect() -> Result<crate::Mode, crate::Error> {
-    if let Some(window) = web_sys::window() {
-        let query_result = window.match_media("(prefers-color-scheme: dark)");
-        if let Ok(Some(mql)) = query_result {
-            return Ok(mql.matches().into());
-        }
-    }
-    Err(crate::Error::DetectionFailed)
+    let window = web_sys::window().ok_or(crate::Error::WindowNotFound)?;
+    let query_result = window
+        .match_media("(prefers-color-scheme: dark)")
+        .map_err(|_| crate::Error::MediaQueryFailed)?;
+    let mql = query_result.ok_or(crate::Error::MediaQueryNotSupported)?;
+    Ok((mql.matches()).into())
 }
