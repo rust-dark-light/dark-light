@@ -28,6 +28,10 @@ fn main() -> Result<(), dark_light::Error> {
 ### Subscribe to system theme changes
 You can subscribe to system theme changes by using the `subscribe` function. This function returns a stream of `Mode` values. The stream will emit a new value whenever the system theme changes.
 
+> [!WARNING]
+> The `subscribe` function is not yet supported on macOS, Windows, and WebAssembly.
+> Using it will result in an empty stream.
+
 ```rust
 use futures_lite::StreamExt;
 
