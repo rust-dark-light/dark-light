@@ -27,7 +27,7 @@ pub use mode::Mode;
 ///     match mode {
 ///         Mode::Dark => {},
 ///         Mode::Light => {},
-///         Mode::Default => {},
+///         Mode::Unspecified => {},
 ///     }
 ///     Ok(())
 /// }
@@ -55,7 +55,7 @@ pub use platforms::platform::detect::detect;
 ///         match mode {
 ///             Mode::Dark => {},
 ///             Mode::Light => {},
-///             Mode::Default => {},
+///             Mode::Unspecified => {},
 ///         }
 ///     }
 ///     Ok(())
