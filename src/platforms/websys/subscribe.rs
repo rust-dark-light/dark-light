@@ -13,5 +13,5 @@ pub async fn subscribe() -> Result<impl futures_lite::Stream<Item = crate::Mode>
             }
         }
     });
-    Ok(stream)
+    Ok(Box::pin(stream))
 }

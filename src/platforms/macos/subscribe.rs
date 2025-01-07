@@ -15,5 +15,5 @@ pub async fn subscribe() -> Result<impl futures_lite::Stream<Item = Mode>, Error
             }
         }
     });
-    Ok(stream)
+    Ok(Box::pin(stream))
 }
