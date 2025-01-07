@@ -1,15 +1,14 @@
-use crate::Mode;
 use winreg::RegKey;
 
 const SUBKEY: &str = "Software\\Microsoft\\Windows\\CurrentVersion\\Themes\\Personalize";
 const VALUE: &str = "AppsUseLightTheme";
 
-pub fn detect() -> crate::Mode {
+pub async fn detect() -> Result<crate::Mode, crate::Error> {
     let hkcu = RegKey::predef(winreg::enums::HKEY_CURRENT_USER);
     if let Ok(subkey) = hkcu.open_subkey(SUBKEY) {
         if let Ok(dword) = subkey.get_value::<u32, _>(VALUE) {
-            return (dword == 0).into();
+            return Ok((dword == 0).into());
         }
     }
-    Mode::Light
+    Err(crate::Error::DetectionFailed)
 }

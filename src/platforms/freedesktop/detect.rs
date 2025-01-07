@@ -1,3 +1,3 @@
-pub fn detect() -> crate::Mode {
-    futures_lite::future::block_on(super::get_color_scheme())
+pub async fn detect() -> Result<crate::Mode, crate::Error> {
+    super::get_color_scheme().await
 }

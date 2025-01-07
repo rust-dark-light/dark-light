@@ -7,17 +7,33 @@ pub enum Mode {
     Dark,
     /// Represents the light mode option.
     Light,
-    /// Used when the system theme mode can’t be detected.
-    Default,
+    /// Used when the system theme mode is unspecified.
+    Unspecified,
 }
 
-/// Creates a `Mode` value from a boolean value.
+impl Mode {
+    /// Returns `true` if the mode is `Mode::Dark`.
+    pub fn is_dark(&self) -> bool {
+        matches!(self, Mode::Dark)
+    }
+
+    /// Returns `true` if the mode is `Mode::Light`.
+    pub fn is_light(&self) -> bool {
+        matches!(self, Mode::Light)
+    }
+
+    /// Returns `true` if the mode is `Mode::Unspecified`.
+    pub fn is_unspecified(&self) -> bool {
+        matches!(self, Mode::Unspecified)
+    }
+}
+
 impl From<bool> for Mode {
-    fn from(b: bool) -> Self {
-        if b {
-            Mode::Dark
+    fn from(dark: bool) -> Self {
+        if dark {
+            Self::Dark
         } else {
-            Mode::Light
+            Self::Light
         }
     }
 }
