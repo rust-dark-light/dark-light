@@ -4,7 +4,7 @@
 use objc2::{class, msg_send};
 use objc2_foundation::{NSObject, NSString};
 
-pub async fn detect() -> Result<crate::Mode, crate::Error> {
+pub fn detect() -> Result<crate::Mode, crate::Error> {
     unsafe {
         let user_defaults: *mut NSObject = msg_send![class!(NSUserDefaults), standardUserDefaults];
         let apple_domain = NSString::from_str("Apple Global Domain");

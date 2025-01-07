@@ -15,9 +15,8 @@ On Linux the XDG Desktop Portal D-Bus API is checked for the `color-scheme` pref
 ### Detect current theme mode
 You can detect the current mode by using the `detect` function. This function returns a `Mode` value.
 ```rust
-#[tokio::main]
-async fn main() -> Result<(), dark_light::Error> {
-    match dark_light::detect().await? {
+fn main() -> Result<(), dark_light::Error> {
+    match dark_light::detect()? {
         dark_light::Mode::Dark => println!("Dark mode"),
         dark_light::Mode::Light => println!("Light mode"),
         dark_light::Mode::Unspecified => println!("Unspecified"),

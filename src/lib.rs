@@ -17,9 +17,8 @@ pub use mode::Mode;
 /// ``` no_run
 /// use dark_light::{ Error, Mode };
 ///
-/// #[tokio::main]
-/// async fn main() -> Result<(), Error> {
-///     let mode = dark_light::detect().await?;
+/// fn main() -> Result<(), Error> {
+///     let mode = dark_light::detect()?;
 ///     match mode {
 ///         Mode::Dark => {},
 ///         Mode::Light => {},

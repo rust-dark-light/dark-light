@@ -1,4 +1,4 @@
-pub async fn detect() -> Result<crate::Mode, crate::Error> {
+pub fn detect() -> Result<crate::Mode, crate::Error> {
     let window = web_sys::window().ok_or(crate::Error::WindowNotFound)?;
     let query_result = window
         .match_media("(prefers-color-scheme: dark)")
