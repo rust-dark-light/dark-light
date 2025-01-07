@@ -3,6 +3,11 @@
 //! It supports macOS, Windows, Linux, BSDs, and WASM.
 //!
 //! On Linux the [XDG Desktop Portal](https://flatpak.github.io/xdg-desktop-portal/) D-Bus API is checked for the `color-scheme` preference, which works in Flatpak sandboxes without needing filesystem access.
+//! <div class="warning">
+//! The <code>subscribe</code> function is not yet supported on macOS, Windows, and WebAssembly.
+//! Using it will result in an empty stream.
+//! </div>
+
 mod error;
 mod mode;
 mod platforms;
