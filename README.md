@@ -2,6 +2,9 @@
     <img src="resources/icon/icon.svg" width="200"/>
     <h1>dark-light</h1>
     <p>Rust crate to detect the system theme mode</p>
+    <img alt="Matrix" src="https://img.shields.io/matrix/dark-light%3Amatrix.org?style=for-the-badge">
+    <br>
+    <br>
 </div>
 
 Supports macOS, Windows, Linux, BSDs, and WASM. On Linux the XDG Desktop Portal D-Bus API is checked for the `color-scheme` preference, which works in Flatpak sandboxes without needing filesystem access.
