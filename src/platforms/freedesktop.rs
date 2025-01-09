@@ -8,8 +8,13 @@ use async_std::{future, task};
 
 pub fn detect() -> Result<Mode, Error> {
     task::block_on(future::timeout(Duration::from_millis(25), async {
-        let settings = XdgPortalSettings::new().await?;
-        let color_scheme = settings.color_scheme().await?;
+        let settings = XdgPortalSettings::new()
+            .await
+            .map_err(|e| Error::XdgDesktopPortal(e.to_string()))?;
+        let color_scheme = settings
+            .color_scheme()
+            .await
+            .map_err(|e| Error::XdgDesktopPortal(e.to_string()))?;
         Ok::<Mode, Error>(color_scheme.into())
     }))
     .map_err(|_| Error::Timeout)?
