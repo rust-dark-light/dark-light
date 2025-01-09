@@ -2,29 +2,22 @@
 // Written with help from Ryan McGrath (https://rymc.io/).
 
 use crate::{Error, Mode};
-use objc2::{class, msg_send};
-use objc2_foundation::{NSObject, NSString};
+use objc2::rc::Retained;
+use objc2_foundation::{ns_string, NSString, NSUserDefaults};
 
 pub fn detect() -> Result<Mode, Error> {
     unsafe {
-        let user_defaults: *mut NSObject = msg_send![class!(NSUserDefaults), standardUserDefaults];
-        let apple_domain = NSString::from_str("Apple Global Domain");
-        let dict: *mut NSObject = msg_send![user_defaults, persistentDomainForName:&*apple_domain];
+        let style = NSUserDefaults::standardUserDefaults()
+            .persistentDomainForName(ns_string!("Apple Global Domain"))
+            .ok_or(Error::PersistentDomainFailed)?
+            .objectForKey(ns_string!("AppleInterfaceStyle"));
 
-        if dict.is_null() {
-            return Err(Error::PersistentDomainFailed);
-        }
-
-        let style_key = NSString::from_str("AppleInterfaceStyle");
-        let style: *mut NSObject = msg_send![dict, objectForKey:&*style_key];
-
-        if style.is_null() {
+        let Some(style) = style else {
             return Ok(Mode::Light);
-        }
+        };
 
-        // Compare with "Dark"
-        let dark_str = NSString::from_str("Dark");
-        let is_dark: bool = msg_send![style, isEqualToString:&*dark_str];
-        Ok(is_dark.into())
+        let style = Retained::cast::<NSString>(style);
+        let mode = style.isEqualToString(ns_string!("Dark")).into();
+        Ok(mode)
     }
 }
