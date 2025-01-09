@@ -42,7 +42,9 @@ pub use websys as platform;
     target_arch = "wasm32"
 )))]
 pub mod platform {
-    pub fn detect() -> crate::Mode {
-        super::Mode::Light
+    use crate::Mode;
+
+    pub fn detect() -> Mode {
+        Mode::Light
     }
 }

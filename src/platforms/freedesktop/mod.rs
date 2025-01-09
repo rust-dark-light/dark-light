@@ -1,20 +1,21 @@
 pub mod detect;
 pub mod subscribe;
 
+use crate::{Error, Mode};
 use ashpd::desktop::settings::ColorScheme as PortalColorScheme;
 use ashpd::desktop::settings::Settings as XdgPortalSettings;
 
-impl From<PortalColorScheme> for crate::Mode {
+impl From<PortalColorScheme> for Mode {
     fn from(value: PortalColorScheme) -> Self {
         match value {
-            PortalColorScheme::NoPreference => crate::Mode::Unspecified,
-            PortalColorScheme::PreferDark => crate::Mode::Dark,
-            PortalColorScheme::PreferLight => crate::Mode::Light,
+            PortalColorScheme::NoPreference => Mode::Unspecified,
+            PortalColorScheme::PreferDark => Mode::Dark,
+            PortalColorScheme::PreferLight => Mode::Light,
         }
     }
 }
 
-pub(crate) async fn get_color_scheme() -> Result<crate::Mode, crate::Error> {
+pub(crate) async fn get_color_scheme() -> Result<Mode, Error> {
     let settings = XdgPortalSettings::new().await?;
     let color_scheme = settings.color_scheme().await?;
     Ok(color_scheme.into())
