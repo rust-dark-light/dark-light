@@ -7,7 +7,7 @@
     <br>
 </div>
 
-Supports macOS, Windows, Linux, BSDs, and WebAssembly. 
+Supports macOS, Windows, Linux, BSDs, and WebAssembly.
 
 On Linux the XDG Desktop Portal D-Bus API is checked for the `color-scheme` preference, which works in Flatpak sandboxes without needing filesystem access.
 
@@ -23,26 +23,6 @@ fn main() -> Result<(), dark_light::Error> {
         dark_light::Mode::Dark => println!("Dark mode"),
         dark_light::Mode::Light => println!("Light mode"),
         dark_light::Mode::Unspecified => println!("Unspecified"),
-    }
-    Ok(())
-}
-```
-
-### Subscribe to system theme changes
-You can subscribe to system theme changes by using the `subscribe` function. This function returns a stream of `Mode` values. The stream will emit a new value whenever the system theme changes.
-
-> [!WARNING]
-> The `subscribe` function is not yet supported on macOS, Windows, and WebAssembly.
-> Using it will result in an empty stream.
-
-```rust
-use futures_lite::StreamExt;
-
-#[tokio::main]
-async fn main() -> Result<(), dark_light::Error> {
-    let mut stream = dark_light::subscribe().await?;
-    while let Some(mode) = stream.next().await {
-        println!("System mode changed: {:?}", mode);
     }
     Ok(())
 }
