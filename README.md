@@ -15,6 +15,14 @@ On Linux the XDG Desktop Portal D-Bus API is checked for the `color-scheme` pref
 
 ## Usage
 
+Add this to your `Cargo.toml`:
+
+```toml
+[dependencies]
+dark-light = "2.0.0"
+```
+
+
 ### Detect current theme mode
 You can detect the current mode by using the `detect` function. This function returns a `Mode` value.
 ```rust
