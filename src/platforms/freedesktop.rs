@@ -7,17 +7,12 @@ use ashpd::desktop::settings::Settings as XdgPortalSettings;
 use async_std::{future, task};
 
 pub fn detect() -> Result<Mode, Error> {
-    task::block_on(async {
-        future::timeout(Duration::from_millis(25), get_color_scheme())
-            .await
-            .map_err(|_| Error::Timeout)?
-    })
-}
-
-pub(crate) async fn get_color_scheme() -> Result<Mode, Error> {
-    let settings = XdgPortalSettings::new().await?;
-    let color_scheme = settings.color_scheme().await?;
-    Ok(color_scheme.into())
+    task::block_on(future::timeout(Duration::from_millis(25), async {
+        let settings = XdgPortalSettings::new().await?;
+        let color_scheme = settings.color_scheme().await?;
+        Ok::<Mode, Error>(color_scheme.into())
+    }))
+    .map_err(|_| Error::Timeout)?
 }
 
 impl From<PortalColorScheme> for Mode {
