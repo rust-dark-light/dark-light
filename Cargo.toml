@@ -15,7 +15,6 @@ build = "build.rs"
 [dependencies]
 futures-lite = "2.3.0"
 log = "0.4.22"
-thiserror = "2.0.9"
 
 [dev-dependencies]
 tokio = { version = "1.23.0", features = ["full"] }

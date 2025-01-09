@@ -19,7 +19,7 @@ pub fn detect() -> Result<Mode, Error> {
         let style: *mut NSObject = msg_send![dict, objectForKey:&*style_key];
 
         if style.is_null() {
-            return Err(Error::AppleInterfaceStyleFailed);
+            return Ok(Mode::Light);
         }
 
         // Compare with "Dark"
