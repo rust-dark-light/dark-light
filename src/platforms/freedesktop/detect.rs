@@ -1,14 +1,5 @@
-#[cfg(any(feature = "sync", doc))]
-pub mod sync {
-    use crate::Mode;
+use crate::{Error, Mode};
 
-    pub fn detect() -> Mode {
-        futures_lite::future::block_on(super::super::get_color_scheme())
-    }
-}
-
-use crate::Mode;
-
-pub async fn detect() -> Mode {
-    super::get_color_scheme().await
+pub fn detect() -> Result<Mode, Error> {
+    futures_lite::future::block_on(super::get_color_scheme())
 }

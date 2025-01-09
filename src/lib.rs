@@ -3,29 +3,33 @@
 //! It supports macOS, Windows, Linux, BSDs, and WASM.
 //!
 //! On Linux the [XDG Desktop Portal](https://flatpak.github.io/xdg-desktop-portal/) D-Bus API is checked for the `color-scheme` preference, which works in Flatpak sandboxes without needing filesystem access.
-//! Features:
-//! - [`sync`] - Enables the synchronous API.
+//! <div class="warning">
+//! The <code>subscribe</code> function is not yet supported on macOS, Windows, and WebAssembly.
+//! Using it will result in an empty stream.
+//! </div>
+
+mod error;
 mod mode;
 mod platforms;
 
+pub use error::Error;
 pub use mode::Mode;
 
-/// Detects the system theme mode. If the mode can’t be detected, it fallbacks to [`Mode::Default`].
+/// Detects the system theme mode.
 ///
 /// # Example
 ///
 /// ``` no_run
-/// use dark_light::Mode;
+/// use dark_light::{ Error, Mode };
 ///
-/// #[tokio::main]
-/// async fn main() {
-///     let mode = dark_light::detect().await;
-///
+/// fn main() -> Result<(), Error> {
+///     let mode = dark_light::detect()?;
 ///     match mode {
 ///         Mode::Dark => {},
 ///         Mode::Light => {},
-///         Mode::Default => {},
+///         Mode::Unspecified => {},
 ///     }
+///     Ok(())
 /// }
 /// ```
 pub use platforms::platform::detect::detect;
@@ -37,43 +41,20 @@ pub use platforms::platform::detect::detect;
 /// # Example
 ///
 /// ``` no_run
-/// use dark_light::Mode;
+/// use dark_light::{ Error, Mode };
 /// use futures_lite::stream::StreamExt;
 ///
 /// #[tokio::main]
-/// async fn main() {
-///     let mut stream = dark_light::subscribe().await;
-///
+/// async fn main() -> Result<(), Error> {
+///     let mut stream = dark_light::subscribe().await?;
 ///     while let Some(mode) = stream.next().await {
 ///         match mode {
 ///             Mode::Dark => {},
 ///             Mode::Light => {},
-///             Mode::Default => {},
+///             Mode::Unspecified => {},
 ///         }
 ///     }
+///     Ok(())
 /// }
 /// ```
 pub use platforms::platform::subscribe::subscribe;
-
-#[cfg(any(feature = "sync", doc))]
-/// The synchronous API of this crate.
-///
-/// If you are upgrading this crate, you may update your code to use the async API or alternatively, you can enable the `sync` feature to use this module.
-pub mod sync {
-    /// Detects the system theme mode. If the mode can’t be detected, it fallbacks to [`Mode::Default`](crate::Mode::Default).
-    ///
-    /// # Example
-    ///
-    /// ``` no_run
-    /// use dark_light::Mode;
-    ///
-    /// let mode = dark_light::sync::detect();
-    ///
-    /// match mode {
-    ///     Mode::Dark => {},
-    ///     Mode::Light => {},
-    ///     Mode::Default => {},
-    /// }
-    /// ```
-    pub use super::platforms::platform::detect::sync::detect;
-}

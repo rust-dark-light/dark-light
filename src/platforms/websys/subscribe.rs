@@ -1,14 +1,6 @@
-pub async fn subscribe() -> impl futures_lite::Stream<Item = crate::Mode> {
-    Box::pin(futures_lite::stream::unfold(
-        crate::detect().await,
-        |last_mode| async move {
-            loop {
-                let current_mode = crate::detect().await;
+use crate::{Error, Mode};
 
-                if current_mode != last_mode {
-                    return Some((current_mode, current_mode));
-                }
-            }
-        },
-    ))
+pub async fn subscribe() -> Result<impl futures_lite::Stream<Item = Mode>, Error> {
+    let stream = futures_lite::stream::empty();
+    Ok(Box::pin(stream))
 }
