@@ -2,7 +2,7 @@
     <img src="resources/icon/icon.svg" width="200"/>
     <h1>dark-light</h1>
     <p>Rust crate to detect the system theme mode</p>
-    <img alt="Matrix" src="https://img.shields.io/matrix/dark-light%3Amatrix.org?style=for-the-badge">
+    <a href="https://matrix.to/#/#dark-light:matrix.org"><img alt="Matrix" src="https://img.shields.io/matrix/dark-light%3Amatrix.org?style=for-the-badge"></a>
     <br>
     <br>
 </div>
