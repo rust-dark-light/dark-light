@@ -8,9 +8,25 @@ pub enum Error {
     /// If the system theme mode could not be detected.
     DetectionFailed,
 
-    #[cfg(target_os = "linux")]
+    #[cfg(any(
+        target_os = "linux",
+        target_os = "freebsd",
+        target_os = "dragonfly",
+        target_os = "netbsd",
+        target_os = "openbsd"
+    ))]
     /// If the XDG Desktop Portal could not be communicated with.
     XdgDesktopPortal(ashpd::Error),
+
+    #[cfg(any(
+        target_os = "linux",
+        target_os = "freebsd",
+        target_os = "dragonfly",
+        target_os = "netbsd",
+        target_os = "openbsd"
+    ))]
+    /// If the timeout is reached.
+    Timeout,
 
     /// Failed to get persistent domain for Apple Global Domain
     #[cfg(target_os = "macos")]
@@ -35,8 +51,22 @@ impl Display for Error {
         match self {
             Error::Io(error) => write!(f, "I/O error: {}", error),
             Error::DetectionFailed => write!(f, "Failed to detect system theme mode"),
-            #[cfg(target_os = "linux")]
+            #[cfg(any(
+                target_os = "linux",
+                target_os = "freebsd",
+                target_os = "dragonfly",
+                target_os = "netbsd",
+                target_os = "openbsd"
+            ))]
             Error::XdgDesktopPortal(err) => write!(f, "XDG Desktop Portal error: {}", err),
+            #[cfg(any(
+                target_os = "linux",
+                target_os = "freebsd",
+                target_os = "dragonfly",
+                target_os = "netbsd",
+                target_os = "openbsd"
+            ))]
+            Error::Timeout => write!(f, "Timeout reached"),
             #[cfg(target_os = "macos")]
             Error::PersistentDomainFailed => {
                 write!(f, "Failed to get persistent domain for Apple Global Domain")
@@ -61,7 +91,13 @@ impl From<std::io::Error> for Error {
     }
 }
 
-#[cfg(target_os = "linux")]
+#[cfg(any(
+    target_os = "linux",
+    target_os = "freebsd",
+    target_os = "dragonfly",
+    target_os = "netbsd",
+    target_os = "openbsd"
+))]
 impl From<ashpd::Error> for Error {
     fn from(error: ashpd::Error) -> Self {
         Error::XdgDesktopPortal(error)
