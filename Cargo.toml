@@ -16,7 +16,7 @@ rust-version = "1.78.0"
 [dependencies]
 
 [target.'cfg(any(target_os = "linux", target_os = "freebsd", target_os = "dragonfly", target_os = "netbsd", target_os = "openbsd"))'.dependencies]
-ashpd = { version = "0.10.0", default-features = false, features = [
+ashpd = { version = "0.11.0", default-features = false, features = [
     "async-std",
 ] }
 async-std = "1.13.0"
