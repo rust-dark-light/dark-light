@@ -13,6 +13,11 @@ readme = "README.md"
 build = "build.rs"
 rust-version = "1.78.0"
 
+[features]
+default = ["async-io"]
+tokio = ["zbus/tokio"]
+async-io = ["zbus/async-io"]
+
 [dependencies]
 
 [target.'cfg(any(target_os = "linux", target_os = "freebsd", target_os = "dragonfly", target_os = "netbsd", target_os = "openbsd"))'.dependencies]
