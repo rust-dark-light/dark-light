@@ -27,17 +27,17 @@ futures-util = "0.3"
 futures-executor = "0.3"
 
 [target.'cfg(any(target_os = "linux", target_os = "freebsd", target_os = "dragonfly", target_os = "netbsd", target_os = "openbsd"))'.dependencies]
-zbus = "5.5.0"
+zbus = "5.19.0"
 
 [target.'cfg(windows)'.dependencies]
-winreg = "0.55.0"
-windows-sys = { version = "0.59", features = [
+winreg = "0.56.0"
+windows-sys = { version = "0.61.2", features = [
     "Win32_Foundation",
     "Win32_System_Registry",
 ] }
 
 [target.'cfg(target_os = "macos")'.dependencies]
-objc2 = "0.6.3"
+objc2 = "0.6.4"
 objc2-foundation = { version = "0.3.2", default-features = false, features = [
     "std",
     "NSObject",
