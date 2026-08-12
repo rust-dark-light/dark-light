@@ -22,7 +22,7 @@ pub struct WatchGuard {
     handle: Option<JoinHandle<()>>,
 }
 
-// SAFETY: `HKEY` is an opaque registry handle value; it is safe to hand off to the
+// `HKEY` is an opaque registry handle value; it is safe to hand off to the
 // watcher thread, which becomes its sole owner until the thread exits.
 unsafe impl Send for WatchGuard {}
 
@@ -37,7 +37,7 @@ impl Drop for WatchGuard {
     }
 }
 
-// SAFETY: `HKEY` is an opaque registry handle value with no thread affinity; the Win32
+// `HKEY` is an opaque registry handle value with no thread affinity; the Win32
 // registry API is safe to call from any thread.
 struct SendHkey(HKEY);
 unsafe impl Send for SendHkey {}

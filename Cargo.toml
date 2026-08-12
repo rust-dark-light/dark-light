@@ -15,10 +15,16 @@ rust-version = "1.78.0"
 
 [features]
 default = ["async-io"]
-tokio = ["zbus/tokio"]
-async-io = ["zbus/async-io"]
+tokio = ["zbus/tokio", "dep:futures-core", "dep:futures-channel"]
+async-io = ["zbus/async-io", "dep:futures-core", "dep:futures-channel"]
 
 [dependencies]
+futures-core = { version = "0.3", optional = true }
+futures-channel = { version = "0.3", optional = true }
+
+[dev-dependencies]
+futures-util = "0.3"
+futures-executor = "0.3"
 
 [target.'cfg(any(target_os = "linux", target_os = "freebsd", target_os = "dragonfly", target_os = "netbsd", target_os = "openbsd"))'.dependencies]
 zbus = "5.5.0"

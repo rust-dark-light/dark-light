@@ -7,6 +7,8 @@
 mod error;
 mod mode;
 mod platforms;
+#[cfg(any(feature = "tokio", feature = "async-io"))]
+mod stream;
 mod watch;
 
 pub use error::Error;
@@ -56,3 +58,28 @@ pub use platforms::platform::detect;
 /// }
 /// ```
 pub use platforms::platform::subscribe;
+
+/// Subscribes to changes in the system theme mode using an async stream.
+///
+/// Returns a [`Stream`] that yields a new [`Mode`] each time the OS theme changes.
+///
+/// # Example
+///
+/// ``` no_run
+/// use dark_light::{ Error, Mode };
+/// use futures::StreamExt;
+///
+/// async fn main() -> Result<(), Error> {
+///     let mut stream = dark_light::stream()?;
+///     while let Some(mode) = stream.next().await {
+///         match mode {
+///             Mode::Dark => {},
+///             Mode::Light => {},
+///             Mode::Unspecified => {},
+///         }
+///     }
+///     Ok(())
+/// }
+/// ```
+#[cfg(any(feature = "tokio", feature = "async-io"))]
+pub use stream::stream;
