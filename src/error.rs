@@ -17,6 +17,8 @@ pub enum Error {
     MediaQueryFailed,
     /// If the media query is not supported.
     MediaQueryNotSupported,
+    /// If watching for theme changes is not supported on this platform.
+    Unsupported,
 }
 
 impl Display for Error {
@@ -31,6 +33,10 @@ impl Display for Error {
             Error::WindowNotFound => write!(f, "Window not found"),
             Error::MediaQueryFailed => write!(f, "Media query failed"),
             Error::MediaQueryNotSupported => write!(f, "Media query not supported"),
+            Error::Unsupported => write!(
+                f,
+                "Watching for theme changes is not supported on this platform"
+            ),
         }
     }
 }

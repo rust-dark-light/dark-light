@@ -35,6 +35,23 @@ fn main() -> Result<(), dark_light::Error> {
 }
 ```
 
+### React to theme changes
+You can subscribe to theme changes by using the `subscribe` function. It returns a `Watcher` that yields a new `Mode` each time the OS theme changes.
+```rust
+fn main() -> Result<(), dark_light::Error> {
+    let watcher = dark_light::subscribe()?;
+    for mode in watcher.iter() {
+        match mode {
+            dark_light::Mode::Dark => println!("Dark mode"),
+            dark_light::Mode::Light => println!("Light mode"),
+            dark_light::Mode::Unspecified => println!("Unspecified"),
+        }
+    }
+    Ok(())
+}
+```
+On macOS, theme changes are currently detected by polling once per second rather than through a native notification, since the objc2 bindings this crate uses don't yet expose a safe way to observe `NSDistributedNotificationCenter`.
+
 ## License
 
 Licensed under either of the following licenses:

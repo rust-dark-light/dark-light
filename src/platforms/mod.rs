@@ -42,9 +42,15 @@ pub use websys as platform;
     target_arch = "wasm32"
 )))]
 pub mod platform {
-    use crate::Mode;
+    use crate::{Error, Mode, Watcher};
 
     pub fn detect() -> Mode {
         Mode::Light
+    }
+
+    pub struct WatchGuard;
+
+    pub fn subscribe() -> Result<Watcher, Error> {
+        Err(Error::Unsupported)
     }
 }
