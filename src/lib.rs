@@ -67,18 +67,20 @@ pub use platforms::platform::subscribe;
 ///
 /// ``` no_run
 /// use dark_light::{ Error, Mode };
-/// use futures::StreamExt;
+/// use futures_util::StreamExt;
 ///
-/// async fn main() -> Result<(), Error> {
-///     let mut stream = dark_light::stream()?;
-///     while let Some(mode) = stream.next().await {
-///         match mode {
-///             Mode::Dark => {},
-///             Mode::Light => {},
-///             Mode::Unspecified => {},
+/// fn main() -> Result<(), Error> {
+///     futures_executor::block_on(async {
+///         let mut stream = dark_light::stream()?;
+///         while let Some(mode) = stream.next().await {
+///             match mode {
+///                 Mode::Dark => {},
+///                 Mode::Light => {},
+///                 Mode::Unspecified => {},
+///             }
 ///         }
-///     }
-///     Ok(())
+///         Ok(())
+///     })
 /// }
 /// ```
 #[cfg(any(feature = "tokio", feature = "async-io"))]
