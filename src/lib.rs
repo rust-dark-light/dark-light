@@ -7,9 +7,11 @@
 mod error;
 mod mode;
 mod platforms;
+mod watch;
 
 pub use error::Error;
 pub use mode::Mode;
+pub use watch::Watcher;
 
 /// Detects the system theme mode.
 ///
@@ -29,3 +31,28 @@ pub use mode::Mode;
 /// }
 /// ```
 pub use platforms::platform::detect;
+
+/// Subscribes to changes in the system theme mode.
+///
+/// Returns a [`Watcher`] that receives a new [`Mode`] each time the OS theme changes.
+/// Only mode transitions are emitted, and the watcher's background thread (where used)
+/// stops when the `Watcher` is dropped.
+///
+/// # Example
+///
+/// ``` no_run
+/// use dark_light::{ Error, Mode };
+///
+/// fn main() -> Result<(), Error> {
+///     let watcher = dark_light::subscribe()?;
+///     for mode in watcher.iter() {
+///         match mode {
+///             Mode::Dark => {},
+///             Mode::Light => {},
+///             Mode::Unspecified => {},
+///         }
+///     }
+///     Ok(())
+/// }
+/// ```
+pub use platforms::platform::subscribe;
