@@ -52,7 +52,7 @@ fn main() -> Result<(), dark_light::Error> {
 ```
 On macOS, theme changes are currently detected by polling once per second rather than through a native notification, since the objc2 bindings this crate uses don't yet expose a safe way to observe `NSDistributedNotificationCenter`.
 
-### Async theme changes
+### Stream theme changes
 With the default `async-io` feature (or `tokio`) enabled, `stream` returns a [`futures_core::Stream`](https://docs.rs/futures-core) of `Mode`.
 ```rust
 use futures_util::StreamExt;
